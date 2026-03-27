@@ -1,67 +1,60 @@
 const express = require("express");
-const cors = require("cors");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔗 CONNECT TO MONGODB
-mongoose.connect("mongodb://127.0.0.1:27017/mydb")
-  .then(() => console.log("MongoDB Connected ✅"))
-  .catch((err) => console.log(err));
+// 🔥 MongoDB Connection (LOCAL)
+mongoose.connect("mongodb://127.0.0.1:27017/serviceApp", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log("MongoDB Connected ✅"))
+.catch((err) => console.log(err));
 
-// 📦 SCHEMA
+// 🔥 Booking Schema
 const bookingSchema = new mongoose.Schema({
   serviceName: String,
 });
 
-// 📁 MODEL
 const Booking = mongoose.model("Booking", bookingSchema);
 
-// SERVICES DATA
-let services = [
-  { id: 1, name: "Plumber", price: 200 },
-  { id: 2, name: "Electrician", price: 300 },
-  { id: 3, name: "Cleaning", price: 150 },
-];
-
-// TEST
-app.get("/", (req, res) => {
-  res.send("Backend running");
-});
-
-// SERVICES
+// 🔥 Services API
 app.get("/services", (req, res) => {
-  res.json(services);
+  res.json([
+    { id: 1, name: "Plumber", price: 200 },
+    { id: 2, name: "Electrician", price: 300 },
+    { id: 3, name: "Cleaning", price: 150 },
+  ]);
 });
 
-// BOOK SERVICE (SAVE TO DB)
+// 🔥 Book Service (SAVE TO DB)
 app.post("/book", async (req, res) => {
-  const { serviceName } = req.body;
-
   try {
+    const { serviceName } = req.body;
+
     const newBooking = new Booking({ serviceName });
     await newBooking.save();
 
-    res.json({ message: "Booked successfully (saved in DB)" });
+    res.json({ message: "Booking saved in DB ✅" });
   } catch (err) {
-    console.log(err);
-    res.json({ message: "Error saving booking" });
+    res.status(500).json({ error: err.message });
   }
 });
 
-// GET BOOKINGS (FROM DB)
+// 🔥 Get Bookings (FETCH FROM DB)
 app.get("/bookings", async (req, res) => {
   try {
     const data = await Booking.find();
     res.json(data);
   } catch (err) {
-    res.json([]);
+    res.status(500).json({ error: err.message });
   }
 });
 
-// START SERVER
+// 🔥 Start Server
 app.listen(5000, () => {
   console.log("Server running on port 5000");
 });

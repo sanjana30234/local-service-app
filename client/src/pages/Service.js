@@ -5,7 +5,7 @@ function Service() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/services")
+    fetch("https://local-service-app-v58d.onrender.com/services")
       .then((res) => res.json())
       .then((data) => setServices(data));
   }, []);
@@ -14,7 +14,7 @@ function Service() {
     setLoading(true);
 
     setTimeout(async () => {
-      await fetch("http://localhost:5000/book", {
+      await fetch("https://local-service-app-v58d.onrender.com/book", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -4,7 +4,7 @@ function Bookings() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/bookings")
+    fetch("https://local-service-app-v58d.onrender.com/bookings")
       .then((res) => res.json())
       .then((data) => setData(data));
   }, []);
