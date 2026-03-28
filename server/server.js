@@ -6,53 +6,43 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 🔥 MongoDB Connection (LOCAL)
-mongoose.connect("mongodb+srv://sanjanaganathe467_db_user:sanjana123@cluster0.xu91o53.mongodb.net/serviceApp?retryWrites=true&w=majority")
-
-.then(() => console.log("MongoDB atlas Connected ✅"))
+// ✅ MongoDB Connection (FINAL FIXED)
+mongoose.connect("mongodb+srv://sanjanaganathe467_db_user:Sanjana123@cluster0.xu91o53.mongodb.net/serviceApp?retryWrites=true&w=majority")
+.then(() => console.log("MongoDB Atlas Connected ✅"))
 .catch((err) => console.log(err));
 
-// 🔥 Booking Schema
+// ✅ Schema
 const bookingSchema = new mongoose.Schema({
   serviceName: String,
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
 
-// 🔥 Services API
-app.get("/services", (req, res) => {
-  res.json([
-    { id: 1, name: "Plumber", price: 200 },
-    { id: 2, name: "Electrician", price: 300 },
-    { id: 3, name: "Cleaning", price: 150 },
-  ]);
+// ✅ Routes
+
+// Test route
+app.get("/", (req, res) => {
+  res.send("Server is running 🚀");
 });
 
-// 🔥 Book Service (SAVE TO DB)
-app.post("/book", async (req, res) => {
-  try {
-    const { serviceName } = req.body;
-
-    const newBooking = new Booking({ serviceName });
-    await newBooking.save();
-
-    res.json({ message: "Booking saved in DB ✅" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// 🔥 Get Bookings (FETCH FROM DB)
+// Get all bookings
 app.get("/bookings", async (req, res) => {
-  try {
-    const data = await Booking.find();
-    res.json(data);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+  const data = await Booking.find();
+  res.json(data);
 });
 
-// 🔥 Start Server
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+// Add booking
+app.post("/bookings", async (req, res) => {
+  const newBooking = new Booking({
+    serviceName: req.body.serviceName,
+  });
+
+  await newBooking.save();
+  res.json({ message: "Booking saved successfully ✅" });
+});
+
+// ✅ Start server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log("Server running on port " + PORT);
 });
