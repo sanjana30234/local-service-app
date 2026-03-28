@@ -1,104 +1,92 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-function Service() {
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(false);
+function Services() {
 
-  useEffect(() => {
-    fetch("https://local-service-app-v58d.onrender.com/services")
-      .then((res) => res.json())
-      .then((data) => setServices(data));
-  }, []);
+  const [loadingService, setLoadingService] = useState("");
 
-  const handleFakePayment = async (service) => {
-    setLoading(true);
+  const bookService = async (service) => {
+    setLoadingService(service);
 
+    // Fake payment delay (real feel)
     setTimeout(async () => {
-      await fetch("https://local-service-app-v58d.onrender.com/book", {
+      await fetch("https://local-service-app-v58d.onrender.com/bookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ serviceName: service.name }),
+        body: JSON.stringify({ serviceName: service }),
       });
 
-      setLoading(false);
-      alert("💳 Payment Successful!");
+      alert("💳 Payment Successful & " + service + " booked ✅");
+      setLoadingService("");
     }, 2000);
   };
 
-  // 🔥 Images + Ratings
-  const serviceDetails = {
-    Plumber: {
-      img: "https://cdn-icons-png.flaticon.com/512/2966/2966486.png",
-      rating: "⭐ 4.7",
+  const services = [
+    {
+      name: "Plumber",
+      desc: "Fix leaks, pipes, and water issues",
+      img: "https://cdn-icons-png.flaticon.com/512/1681/1681796.png"
     },
-    Electrician: {
-      img: "https://cdn-icons-png.flaticon.com/512/1048/1048315.png",
-      rating: "⭐ 4.8",
+    {
+      name: "Electrician",
+      desc: "Electrical repairs and installations",
+      img: "https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
     },
-    Cleaning: {
-      img: "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
-      rating: "⭐ 4.6",
-    },
-  };
+    {
+      name: "Cleaning",
+      desc: "Home and office cleaning services",
+      img: "https://cdn-icons-png.flaticon.com/512/2921/2921822.png"
+    }
+  ];
 
   return (
-    <div style={{ padding: "40px", textAlign: "center", background: "#f5f7fa", minHeight: "100vh" }}>
-      <h1 style={{ marginBottom: "30px" }}>✨ Premium Services</h1>
+    <div style={{ textAlign: "center", padding: "30px", background: "#f5f7fa", minHeight: "100vh" }}>
+      
+      <h1 style={{ marginBottom: "30px" }}>✨ Premium Home Services</h1>
 
-      {loading && <h3>Processing Payment... ⏳</h3>}
+      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "20px" }}>
 
-      <div style={{
-        display: "flex",
-        justifyContent: "center",
-        gap: "25px",
-        flexWrap: "wrap"
-      }}>
-        {services.map((s) => (
-          <div key={s.id} style={{
-            background: "white",
+        {services.map((service, index) => (
+          <div key={index} style={{
+            background: "#fff",
+            padding: "20px",
+            width: "260px",
             borderRadius: "15px",
-            padding: "25px",
-            width: "240px",
-            boxShadow: "0 8px 16px rgba(0,0,0,0.15)",
+            boxShadow: "0 6px 15px rgba(0,0,0,0.1)",
             transition: "0.3s"
           }}>
-            
-            <img
-              src={serviceDetails[s.name].img}
-              alt={s.name}
-              style={{ width: "90px", marginBottom: "10px" }}
+
+            <img 
+              src={service.img} 
+              alt={service.name} 
+              style={{ width: "80px", marginBottom: "10px" }}
             />
 
-            <h3>{s.name}</h3>
-            <p>{serviceDetails[s.name].rating}</p>
-
-            <p style={{ fontWeight: "bold", fontSize: "18px" }}>
-              ₹{s.price}
-            </p>
+            <h2>{service.name}</h2>
+            <p>{service.desc}</p>
 
             <button
-              onClick={() => handleFakePayment(s)}
+              onClick={() => bookService(service.name)}
               style={{
-                padding: "10px",
-                background: "linear-gradient(45deg, #007bff, #00c6ff)",
-                color: "white",
+                padding: "10px 15px",
+                background: "#007bff",
+                color: "#fff",
                 border: "none",
-                borderRadius: "8px",
+                borderRadius: "6px",
                 cursor: "pointer",
-                width: "100%",
                 marginTop: "10px"
               }}
             >
-              Pay & Book
+              {loadingService === service.name ? "Processing Payment..." : "Pay & Book"}
             </button>
 
           </div>
         ))}
+
       </div>
     </div>
   );
 }
 
-export default Service;
+export default Services;
