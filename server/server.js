@@ -7,11 +7,9 @@ app.use(cors());
 app.use(express.json());
 
 // 🔥 MongoDB Connection (LOCAL)
-mongoose.connect("mongodb://127.0.0.1:27017/serviceApp", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log("MongoDB Connected ✅"))
+mongoose.connect("YOUR_ATLAS_URL")
+
+.then(() => console.log("MongoDB atlas Connected ✅"))
 .catch((err) => console.log(err));
 
 // 🔥 Booking Schema

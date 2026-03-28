@@ -6,7 +6,18 @@ function Bookings() {
   useEffect(() => {
     fetch("https://local-service-app-v58d.onrender.com/bookings")
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((result) => {
+        if (Array.isArray(result)) {
+          setData(result);
+        } else {
+          console.log("Error:", result);
+          setData([]);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        setData([]);
+      });
   }, []);
 
   return (
