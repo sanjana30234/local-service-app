@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // 🔥 MongoDB Connection (LOCAL)
-mongoose.connect("mongodb+srv://sanjanaganathe467_db_user:Sanjana%40123@cluster0.xu91o53.mongodb.net/serviceApp?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://sanjanaganathe467_db_user:sanjana123@cluster0.xu91o53.mongodb.net/serviceApp?retryWrites=true&w=majority")
 
 .then(() => console.log("MongoDB atlas Connected ✅"))
 .catch((err) => console.log(err));
