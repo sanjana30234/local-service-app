@@ -27,6 +27,10 @@ app.get("/", (req, res) => {
   res.send("Server is running 🚀");
 });
 
+app.get("/test", (req, res) => {
+  res.send("Test route working");
+});
+
 // ✅ GET ALL BOOKINGS
 app.get("/bookings", async (req, res) => {
   try {
