@@ -10,7 +10,7 @@ app.use(express.json());
 
 // ✅ MongoDB Connection (IMPORTANT: your password is Sanjana123)
 mongoose.connect(
-  "mongodb+srv://sanjanaganathe467_db_user:Sanjana123@cluster0.xu91o53.mongodb.net/localservices?retryWrites=true&w=majority"
+  "mongodb+srv://sanjanaganathe467_db_user:Chinni123@cluster0.xu91o53.mongodb.net/localservices?retryWrites=true&w=majority"
 )
 .then(() => console.log("MongoDB Atlas connected"))
 .catch((err) => console.log(err));
