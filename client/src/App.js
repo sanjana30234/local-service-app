@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Service from "./pages/Service";
 import Bookings from "./pages/Bookings";
 import Home from "./pages/home";
+import login from "./components/login";
+import navbar from ".components/navbar";
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Service />} />
         <Route path="/bookings" element={<Bookings />} />
+        <Route path="/login" element={<login />} />
+        <Route path="/login" element={<login />} />
       </Routes>
 
     </Router>
