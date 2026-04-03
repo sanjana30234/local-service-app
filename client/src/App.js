@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Service from "./pages/Service";
 import Bookings from "./pages/Bookings";
 import Home from "./pages/home";
-import login from "./components/login";
-import navbar from ".components/navbar";
+import Login from "./components/login";
+import Navbar from ".components/navbar";
 
 function App() {
   return (
