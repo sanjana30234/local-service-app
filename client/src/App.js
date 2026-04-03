@@ -1,57 +1,58 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import Navbar from "./components/Navbar";
-import Login from "./components/Login";
-import Services from "./components/Services";
-import Bookings from "./components/Bookings";
+import Login from "./pages/login";
+import Services from "./pages/services";
+import Bookings from "./pages/bookings";
+
+function Navbar() {
+  return (
+    <nav style={{
+      display: "flex",
+      justifyContent: "space-between",
+      padding: "15px 30px",
+      background: "#1e1e2f",
+      color: "white"
+    }}>
+      <h2>Local Services</h2>
+
+      <div>
+        <Link to="/" style={linkStyle}>Home</Link>
+        <Link to="/services" style={linkStyle}>Services</Link>
+        <Link to="/bookings" style={linkStyle}>Bookings</Link>
+        <Link to="/login" style={linkStyle}>Login</Link>
+      </div>
+    </nav>
+  );
+}
+
+const linkStyle = {
+  margin: "0 10px",
+  color: "white",
+  textDecoration: "none"
+};
 
 function Home() {
   return (
-    <div style={{
-      textAlign: "center",
-      marginTop: "80px",
-      padding: "20px"
-    }}>
-      <h1 style={{ fontSize: "40px", color: "#333" }}>
-        Welcome to Local Services 🔧
-      </h1>
+    <div style={{ textAlign: "center", marginTop: "80px" }}>
+      <h1>Welcome to Local Services 🔧</h1>
+      <p>Book electricians, cleaners and more!</p>
 
-      <p style={{ fontSize: "18px", color: "#666", marginTop: "10px" }}>
-        Book electricians, cleaners and more at your doorstep!
-      </p>
-
-      <div style={{ marginTop: "30px" }}>
-        <a href="/services">
-          <button style={{
-            padding: "12px 25px",
-            background: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            marginRight: "10px",
-            cursor: "pointer"
-          }}>
-            Explore Services
-          </button>
-        </a>
-
-        <a href="/login">
-          <button style={{
-            padding: "12px 25px",
-            background: "#28a745",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            cursor: "pointer"
-          }}>
-            Login
-          </button>
-        </a>
-      </div>
+      <Link to="/services">
+        <button style={btnBlue}>Explore Services</button>
+      </Link>
     </div>
   );
 }
+
+const btnBlue = {
+  padding: "12px 25px",
+  background: "#007bff",
+  color: "white",
+  border: "none",
+  borderRadius: "5px",
+  marginTop: "20px"
+};
 
 function App() {
   return (
