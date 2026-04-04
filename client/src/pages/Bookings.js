@@ -1,48 +1,71 @@
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 function Bookings() {
-  const [data, setData] = useState([]);
+  const [name, setName] = useState("");
+  const [service, setService] = useState("");
 
-  useEffect(() => {
-    fetch("https://local-service-app-v58d.onrender.com/bookings")
-      .then((res) => res.json())
-      .then((result) => {
-        if (Array.isArray(result)) {
-          setData(result);
-        } else {
-          console.log("Error:", result);
-          setData([]);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setData([]);
+  const handleBooking = async () => {
+    if (!name || !service) {
+      alert("Enter all details ❌");
+      return;
+    }
+
+    try {
+      const res = await fetch("https://local-service-backend-8ah0.onrender.com/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, service })
       });
-  }, []);
+
+      const data = await res.json();
+      alert("Booking Successful ✅");
+
+    } catch (err) {
+      alert("Error booking ❌");
+    }
+  };
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>My Bookings</h2>
+      <h2>Book Service</h2>
 
-      {data.length === 0 ? (
-        <p>No bookings yet</p>
-      ) : (
-        data.map((b, index) => (
-          <div key={index} style={{
-            margin: "10px",
-            padding: "10px",
-            border: "1px solid #ddd",
-            borderRadius: "8px",
-            width: "200px",
-            marginLeft: "auto",
-            marginRight: "auto"
-          }}>
-            {b.serviceName}
-          </div>
-        ))
-      )}
+      <input
+        type="text"
+        placeholder="Enter your name"
+        onChange={(e) => setName(e.target.value)}
+        style={input}
+      />
+
+      <input
+        type="text"
+        placeholder="Enter service (Electrician, Cleaning)"
+        onChange={(e) => setService(e.target.value)}
+        style={input}
+      />
+
+      <br />
+
+      <button onClick={handleBooking} style={btn}>
+        Confirm Booking
+      </button>
     </div>
   );
 }
+
+const input = {
+  padding: "10px",
+  margin: "10px",
+  width: "250px"
+};
+
+const btn = {
+  padding: "10px 20px",
+  background: "#007bff",
+  color: "white",
+  border: "none",
+  borderRadius: "5px"
+};
 
 export default Bookings;

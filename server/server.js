@@ -8,56 +8,48 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ✅ MongoDB Connection (IMPORTANT: your password is Sanjana123)
-mongoose.connect(
-  "mongodb+srv://sanjanaganathe467_db_user:Chinni123@cluster0.xu91o53.mongodb.net/localservices?retryWrites=true&w=majority"
-)
+// 🔥 MongoDB Connection
+mongoose.connect("mongodb+srv://sanjanaganathe467_db_user:Chinni123@cluster0.xu91o53.mongodb.net/localservices?retryWrites=true&w=majority")
 .then(() => console.log("MongoDB Atlas connected"))
-.catch((err) => console.log(err));
+.catch(err => console.log(err));
 
-// ✅ Booking Schema
+// 🔥 Booking Schema
 const bookingSchema = new mongoose.Schema({
-  serviceName: String,
+  name: String,
+  service: String
 });
 
 const Booking = mongoose.model("Booking", bookingSchema);
 
-// ✅ Test Route
+// ✅ Default route
 app.get("/", (req, res) => {
-  res.send("Server is running 🚀");
+  res.send("Server is running");
 });
 
-app.get("/test", (req, res) => {
-  res.send("Test route working");
-});
-
-// ✅ GET ALL BOOKINGS
-app.get("/bookings", async (req, res) => {
-  try {
-    const bookings = await Booking.find();
-    res.json(bookings);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching bookings" });
-  }
-});
-
-// ✅ CREATE BOOKING
+// ✅ POST Booking (SAVE)
 app.post("/bookings", async (req, res) => {
   try {
-    const newBooking = new Booking({
-      serviceName: req.body.serviceName,
-    });
-
-    await newBooking.save();
+    const booking = new Booking(req.body);
+    await booking.save();
     res.json({ message: "Booking saved successfully" });
-  } catch (error) {
+  } catch (err) {
     res.status(500).json({ error: "Error saving booking" });
   }
 });
 
-// ✅ Server Start
+// ✅ GET Bookings (FETCH)
+app.get("/bookings", async (req, res) => {
+  try {
+    const data = await Booking.find();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ error: "Error fetching bookings" });
+  }
+});
+
+// 🔥 Server Port
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log("Server running on port " + PORT);
+  console.log(`Server running on port ${PORT}`);
 });
