@@ -11,7 +11,7 @@ function Bookings() {
     }
 
     try {
-      const res = await fetch("https://local-service-backend-8ah0.onrender.com/bookings", {
+      await fetch("https://local-service-backend-8ah0.onrender.com/bookings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -19,53 +19,44 @@ function Bookings() {
         body: JSON.stringify({ name, service })
       });
 
-      const data = await res.json();
       alert("Booking Successful ✅");
-
-    } catch (err) {
-      alert("Error booking ❌");
+    } catch {
+      alert("Error ❌");
     }
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Book Service</h2>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      marginTop: "80px"
+    }}>
+      <h2>Book Your Service</h2>
 
-      <input
-        type="text"
-        placeholder="Enter your name"
-        onChange={(e) => setName(e.target.value)}
-        style={input}
-      />
+      <input placeholder="Your Name" onChange={e => setName(e.target.value)} style={input}/>
+      <input placeholder="Service" onChange={e => setService(e.target.value)} style={input}/>
 
-      <input
-        type="text"
-        placeholder="Enter service (Electrician, Cleaning)"
-        onChange={(e) => setService(e.target.value)}
-        style={input}
-      />
-
-      <br />
-
-      <button onClick={handleBooking} style={btn}>
-        Confirm Booking
-      </button>
+      <button onClick={handleBooking} style={btn}>Confirm Booking</button>
     </div>
   );
 }
 
 const input = {
-  padding: "10px",
+  padding: "12px",
   margin: "10px",
-  width: "250px"
+  width: "250px",
+  borderRadius: "8px",
+  border: "1px solid #ccc"
 };
 
 const btn = {
-  padding: "10px 20px",
-  background: "#007bff",
+  padding: "12px 25px",
+  background: "#4b6cb7",
   color: "white",
   border: "none",
-  borderRadius: "5px"
+  borderRadius: "8px",
+  cursor: "pointer"
 };
 
 export default Bookings;

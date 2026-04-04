@@ -21,6 +21,13 @@ const bookingSchema = new mongoose.Schema({
 
 const Booking = mongoose.model("Booking", bookingSchema);
 
+const userSchema = new mongoose.Schema({
+  email: String,
+  password: String
+});
+
+const User = mongoose.model("User", userSchema);
+
 // ✅ Default route
 app.get("/", (req, res) => {
   res.send("Server is running");
@@ -44,6 +51,29 @@ app.get("/bookings", async (req, res) => {
     res.json(data);
   } catch (err) {
     res.status(500).json({ error: "Error fetching bookings" });
+  }
+});
+
+app.post("/signup", async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.json({ message: "User registered" });
+  } catch (err) {
+    res.status(500).json({ error: "Signup failed" });
+  }
+});
+
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email, password });
+
+  if (user) {
+    res.json({ message: "Login success" });
+  } else {
+    res.status(401).json({ message: "Invalid credentials" });
   }
 });
 

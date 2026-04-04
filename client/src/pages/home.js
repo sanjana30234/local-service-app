@@ -1,3 +1,5 @@
+import React from "react";
+
 function Home() {
   return (
     <div style={{
@@ -6,32 +8,40 @@ function Home() {
       padding: "20px"
     }}>
       
-      <h1 style={{ fontSize: "40px", marginBottom: "20px" }}>
-        🛠️ Local Service App
+      <h1 style={{
+        fontSize: "45px",
+        color: "#333",
+        marginBottom: "20px"
+      }}>
+        Book Trusted Home Services 🏠
       </h1>
 
-      <p style={{ fontSize: "18px", color: "#555" }}>
-        Book trusted services like Plumber, Electrician & Cleaning easily!
+      <p style={{
+        color: "#777",
+        fontSize: "18px",
+        marginBottom: "30px"
+      }}>
+        Electrician, Cleaning, Plumbing & more at your doorstep
       </p>
 
-      <div style={{ marginTop: "40px" }}>
-        <a href="/services">
-          <button style={{
-            padding: "12px 20px",
-            fontSize: "16px",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "6px",
-            cursor: "pointer"
-          }}>
-            Explore Services
-          </button>
-        </a>
-      </div>
+      <a href="/services">
+        <button style={btn}>
+          Explore Services
+        </button>
+      </a>
 
     </div>
   );
 }
+
+const btn = {
+  padding: "14px 30px",
+  background: "#4b6cb7",
+  color: "white",
+  border: "none",
+  borderRadius: "8px",
+  fontSize: "16px",
+  cursor: "pointer"
+};
 
 export default Home;

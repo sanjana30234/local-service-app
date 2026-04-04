@@ -1,60 +1,48 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignup = async () => {
-    console.log("Signup button clicked");
-
     try {
-      const res = await fetch("http://127.0.0.1:5000/signup", {
+      await fetch("https://local-service-backend-8ah0.onrender.com/signup", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
+        body: JSON.stringify({ email, password })
       });
 
-      const data = await res.json();
-      alert(data.message);
-    } catch (err) {
-      console.log("ERROR:", err);
-      alert("Error connecting to backend");
+      alert("Signup Successful ✅");
+    } catch {
+      alert("Error ❌");
     }
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h2>Signup Page</h2>
+    <div style={{ textAlign: "center", marginTop: "80px" }}>
+      <h2>Signup</h2>
 
-      <input
-        type="email"
-        placeholder="Enter Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        style={{ display: "block", margin: "10px auto", padding: "8px" }}
-      />
+      <input placeholder="Email" onChange={e => setEmail(e.target.value)} style={input}/>
+      <input type="password" placeholder="Password" onChange={e => setPassword(e.target.value)} style={input}/>
 
-      <input
-        type="password"
-        placeholder="Enter Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        style={{ display: "block", margin: "10px auto", padding: "8px" }}
-      />
-
-      <button
-        onClick={handleSignup}
-        style={{ padding: "10px 20px", cursor: "pointer" }}
-      >
-        Signup
-      </button>
+      <button onClick={handleSignup} style={btn}>Signup</button>
     </div>
   );
 }
+
+const input = {
+  padding: "10px",
+  margin: "10px",
+  width: "250px"
+};
+
+const btn = {
+  padding: "10px 20px",
+  background: "green",
+  color: "white",
+  border: "none"
+};
 
 export default Signup;

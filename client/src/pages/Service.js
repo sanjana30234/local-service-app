@@ -1,92 +1,70 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function Services() {
-
-  const [loadingService, setLoadingService] = useState("");
-
-  const bookService = async (service) => {
-    setLoadingService(service);
-
-    // Fake payment delay (real feel)
-    setTimeout(async () => {
-      await fetch("https://local-service-app-v58d.onrender.com/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ serviceName: service }),
-      });
-
-      alert("💳 Payment Successful & " + service + " booked ✅");
-      setLoadingService("");
-    }, 2000);
-  };
+function Service() {
+  const navigate = useNavigate();
 
   const services = [
     {
-      name: "Plumber",
-      desc: "Fix leaks, pipes, and water issues",
-      img: "https://cdn-icons-png.flaticon.com/512/1681/1681796.png"
+      name: "Electrician ⚡",
+      img: "https://cdn-icons-png.flaticon.com/512/1048/1048947.png"
     },
     {
-      name: "Electrician",
-      desc: "Electrical repairs and installations",
-      img: "https://cdn-icons-png.flaticon.com/512/1046/1046784.png"
+      name: "Cleaning 🧹",
+      img: "https://cdn-icons-png.flaticon.com/512/2920/2920349.png"
     },
     {
-      name: "Cleaning",
-      desc: "Home and office cleaning services",
-      img: "https://cdn-icons-png.flaticon.com/512/2921/2921822.png"
+      name: "Plumbing 🚿",
+      img: "https://cdn-icons-png.flaticon.com/512/1681/1681646.png"
     }
   ];
 
   return (
-    <div style={{ textAlign: "center", padding: "30px", background: "#f5f7fa", minHeight: "100vh" }}>
-      
-      <h1 style={{ marginBottom: "30px" }}>✨ Premium Home Services</h1>
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      gap: "30px",
+      marginTop: "80px",
+      flexWrap: "wrap"
+    }}>
+      {services.map((service, index) => (
+        <div key={index} style={{
+          background: "#fff",
+          padding: "25px",
+          borderRadius: "15px",
+          width: "220px",
+          textAlign: "center",
+          boxShadow: "0 5px 15px rgba(0,0,0,0.2)"
+        }}>
+          
+          <img
+            src={service.img}
+            alt={service.name}
+            style={{ width: "80px", marginBottom: "15px" }}
+          />
 
-      <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "20px" }}>
+          <h3>{service.name}</h3>
 
-        {services.map((service, index) => (
-          <div key={index} style={{
-            background: "#fff",
-            padding: "20px",
-            width: "260px",
-            borderRadius: "15px",
-            boxShadow: "0 6px 15px rgba(0,0,0,0.1)",
-            transition: "0.3s"
-          }}>
-
-            <img 
-              src={service.img} 
-              alt={service.name} 
-              style={{ width: "80px", marginBottom: "10px" }}
-            />
-
-            <h2>{service.name}</h2>
-            <p>{service.desc}</p>
-
-            <button
-              onClick={() => bookService(service.name)}
-              style={{
-                padding: "10px 15px",
-                background: "#007bff",
-                color: "#fff",
-                border: "none",
-                borderRadius: "6px",
-                cursor: "pointer",
-                marginTop: "10px"
-              }}
-            >
-              {loadingService === service.name ? "Processing Payment..." : "Pay & Book"}
-            </button>
-
-          </div>
-        ))}
-
-      </div>
+          <button
+            onClick={() => navigate("/bookings")}
+            style={btn}
+          >
+            Book Now
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
 
-export default Services;
+const btn = {
+  marginTop: "15px",
+  padding: "10px 20px",
+  background: "#4b6cb7",
+  color: "white",
+  border: "none",
+  borderRadius: "5px",
+  cursor: "pointer"
+};
+
+export default Service;
