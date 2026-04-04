@@ -25,7 +25,7 @@ function Navbar() {
         <a href="/services" style={linkStyle}>Services</a>
         <a href="/bookings" style={linkStyle}>Bookings</a>
         <a href="/login" style={linkStyle}>Login</a>
-        <a href="/signup" style={linkstyle}>Signup</a>
+        <a href="/signup" style={linkStyle}>Signup</a>
       </div>
     </nav>
   );
